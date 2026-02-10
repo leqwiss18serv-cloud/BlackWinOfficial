@@ -727,30 +727,93 @@
 
         // Расширенный список кейсов
         const CASES = [
+            { id: 'starter', name: 'Начальный кейс', price: 5000, color: 'gray-500', minB: 500, maxB: 8000, winRate: 0.45 },
             { id: 'bronze', name: 'Бронзовый кейс', price: 15000, color: 'orange-800', minB: 1000, maxB: 20000, winRate: 0.35 },
             { id: 'silver', name: 'Серебряный кейс', price: 75000, color: 'slate-400', minB: 5000, maxB: 90000, winRate: 0.3 },
+            { id: 'ruby', name: 'Рубиновый кейс', price: 150000, color: 'red-600', minB: 15000, maxB: 200000, winRate: 0.28, minXP: 500, maxXP: 1500 },
             { id: 'gold', name: 'Золотой кейс', price: 200000, color: 'yellow-500', minB: 20000, maxB: 300000, winRate: 0.25 },
+            { id: 'emerald', name: 'Изумрудный кейс', price: 350000, color: 'emerald-500', minB: 50000, maxB: 500000, winRate: 0.22, minXP: 1000, maxXP: 3000 },
             { id: 'black', name: 'Black Win Ultra', price: 500000, color: 'white', minB: 300000, maxB: 5000000, winRate: 0.2, minXP: 2000, maxXP: 5000 },
+            { id: 'cosmic', name: 'Космический кейс', price: 750000, color: 'indigo-500', minB: 400000, maxB: 8000000, winRate: 0.18, minXP: 3000, maxXP: 7000 },
             { id: 'platinum', name: 'Платиновый кейс', price: 1000000, color: 'cyan-400', minB: 500000, maxB: 10000000, winRate: 0.15, minXP: 5000, maxXP: 15000 },
-            { id: 'diamond', name: 'Алмазный кейс', price: 5000000, color: 'blue-400', minB: 2000000, maxB: 50000000, winRate: 0.1, minXP: 10000, maxXP: 50000 }
+            { id: 'legendary', name: 'Легендарный кейс', price: 2500000, color: 'orange-500', minB: 1000000, maxB: 25000000, winRate: 0.12, minXP: 8000, maxXP: 25000 },
+            { id: 'diamond', name: 'Алмазный кейс', price: 5000000, color: 'blue-400', minB: 2000000, maxB: 50000000, winRate: 0.1, minXP: 10000, maxXP: 50000 },
+            { id: 'mythic', name: 'Мифический кейс', price: 10000000, color: 'purple-600', minB: 5000000, maxB: 100000000, winRate: 0.08, minXP: 20000, maxXP: 80000 },
+            { id: 'ultimate', name: 'Ultimate кейс', price: 50000000, color: 'pink-500', minB: 30000000, maxB: 500000000, winRate: 0.05, minXP: 50000, maxXP: 200000 }
         ];
 
         // Расширенный список заданий
         const QUESTS = [
+            // Игровые квесты
             { id: 'win_roulette', name: 'Выиграть в Рулетку x3', description: 'Выиграть 100.000BC в Рулетке x3', required: 100000, reward: 1000, type: 'win_roulette' },
-            { id: 'add_friend', name: 'Найти друга', description: 'Добавить 5 друзей в друзья', required: 5, reward: 5000, type: 'add_friend' },
-            { id: 'deposit_bank', name: 'Вклад в банк', description: 'Положить на банковский счет 100.000BC', required: 100000, reward: 1000, type: 'deposit_bank' },
             { id: 'win_binary', name: 'Победить в 50/50', description: 'Выиграть 50.000BC в Удаче 50/50', required: 50000, reward: 800, type: 'win_binary' },
-            { id: 'open_cases', name: 'Открыть кейсы', description: 'Открыть 10 любых кейсов', required: 10, reward: 1500, type: 'open_cases' },
-            { id: 'reach_level_15', name: 'Достичь уровня', description: 'Достигнуть 15 уровня в Black Pass', required: 15, reward: 2000, type: 'reach_level' },
+            { id: 'win_dice', name: 'Выиграть в Кости', description: 'Выиграть 30.000BC в Костях x6', required: 30000, reward: 1000, type: 'win_dice' },
             { id: 'play_highlow', name: 'Сыграть в High/Low', description: 'Сыграть 20 раз в High/Low', required: 20, reward: 1200, type: 'play_highlow' },
             { id: 'play_crash', name: 'Сыграть в Crash', description: 'Сыграть 10 раз в Crash x100', required: 10, reward: 1500, type: 'play_crash' },
-            { id: 'win_dice', name: 'Выиграть в Кости', description: 'Выиграть 30.000BC в Костях x6', required: 30000, reward: 1000, type: 'win_dice' },
+            { id: 'win_coinflip', name: 'Победа в Монетке', description: 'Выиграть 10 раз в Монетку x2', required: 10, reward: 1000, type: 'win_coinflip' },
+            { id: 'play_wheel', name: 'Крути колесо', description: 'Сыграть 15 раз в Колесо x10', required: 15, reward: 1800, type: 'play_wheel' },
+            { id: 'win_slots', name: 'Джекпот в слотах', description: 'Выиграть 200.000BC в слотах', required: 200000, reward: 2500, type: 'win_slots' },
+            { id: 'play_blackjack', name: 'Мастер блэкджека', description: 'Сыграть 25 раз в Блэкджек', required: 25, reward: 2000, type: 'play_blackjack' },
+            { id: 'survive_mines', name: 'Сапёр', description: 'Открыть 50 безопасных клеток в Минах', required: 50, reward: 3000, type: 'survive_mines' },
+            { id: 'climb_tower', name: 'Покоритель башни', description: 'Подняться на 30 этаж в Tower', required: 30, reward: 3500, type: 'climb_tower' },
+            { id: 'play_plinko', name: 'Мастер Plinko', description: 'Сыграть 20 раз в Plinko', required: 20, reward: 1500, type: 'play_plinko' },
+            { id: 'win_limbo', name: 'Победитель Limbo', description: 'Выиграть 100.000BC в Limbo', required: 100000, reward: 2000, type: 'win_limbo' },
+            { id: 'play_hilo', name: 'Карточный мастер', description: 'Угадать 30 карт в Hi-Lo', required: 30, reward: 2500, type: 'play_hilo' },
+            
+            // Квесты на кейсы
+            { id: 'open_cases', name: 'Открыть кейсы', description: 'Открыть 10 любых кейсов', required: 10, reward: 1500, type: 'open_cases' },
+            { id: 'open_starter', name: 'Начало пути', description: 'Открыть 5 начальных кейсов', required: 5, reward: 800, type: 'open_starter' },
+            { id: 'open_ruby', name: 'Рубиновая удача', description: 'Открыть 3 рубиновых кейса', required: 3, reward: 2000, type: 'open_ruby' },
+            { id: 'open_emerald', name: 'Изумрудный охотник', description: 'Открыть изумрудный кейс', required: 1, reward: 3000, type: 'open_emerald' },
+            { id: 'open_cosmic', name: 'Космическая фортуна', description: 'Открыть космический кейс', required: 1, reward: 5000, type: 'open_cosmic' },
+            { id: 'open_legendary', name: 'Легендарный коллекционер', description: 'Открыть легендарный кейс', required: 1, reward: 10000, type: 'open_legendary' },
+            { id: 'open_mythic', name: 'Мифический искатель', description: 'Открыть мифический кейс', required: 1, reward: 20000, type: 'open_mythic' },
+            
+            // Накопительные квесты
+            { id: 'accumulate_100k', name: 'Первый капитал', description: 'Накопить 100.000 BC', required: 100000, reward: 5000, type: 'accumulate' },
+            { id: 'accumulate_500k', name: 'Богач', description: 'Накопить 500.000 BC', required: 500000, reward: 15000, type: 'accumulate' },
+            { id: 'accumulate_1m', name: 'Миллионер', description: 'Накопить 1.000.000 BC', required: 1000000, reward: 50000, type: 'accumulate' },
+            
+            // Социальные квесты
+            { id: 'add_friend', name: 'Найти друга', description: 'Добавить 5 друзей в друзья', required: 5, reward: 5000, type: 'add_friend' },
+            { id: 'send_gift', name: 'Щедрый игрок', description: 'Отправить подарки 3 друзьям', required: 3, reward: 3000, type: 'send_gift' },
+            { id: 'send_messages', name: 'Общительный', description: 'Написать 50 сообщений в чат', required: 50, reward: 2000, type: 'send_messages' },
+            { id: 'help_friend', name: 'Помощь другу', description: 'Помочь другу выполнить задание', required: 1, reward: 5000, type: 'help_friend' },
+            
+            // Серийные квесты
+            { id: 'win_streak', name: 'Серия побед', description: 'Выиграть 5 раз подряд в любых играх', required: 5, reward: 3000, type: 'win_streak' },
+            { id: 'win_streak_10', name: 'Неудержимый', description: 'Выиграть 10 раз подряд', required: 10, reward: 10000, type: 'win_streak_10' },
+            { id: 'no_loss_day', name: 'Безупречный день', description: 'Выиграть 20 игр без проигрышей', required: 20, reward: 15000, type: 'no_loss_day' },
+            
+            // Прогрессионные квесты
+            { id: 'reach_level_15', name: 'Достичь уровня', description: 'Достигнуть 15 уровня в Black Pass', required: 15, reward: 2000, type: 'reach_level' },
+            { id: 'reach_level_30', name: 'Опытный игрок', description: 'Достигнуть 30 уровня в Black Pass', required: 30, reward: 10000, type: 'reach_level_30' },
+            { id: 'reach_level_50', name: 'Мастер', description: 'Достигнуть 50 уровня в Black Pass', required: 50, reward: 25000, type: 'reach_level_50' },
+            { id: 'reach_level_75', name: 'Легенда', description: 'Достигнуть 75 уровня в Black Pass', required: 75, reward: 50000, type: 'reach_level_75' },
+            { id: 'reach_level_100', name: 'Бог Black Win', description: 'Достигнуть 100 уровня в Black Pass', required: 100, reward: 100000, type: 'reach_level_100' },
+            
+            // Банковские квесты
+            { id: 'deposit_bank', name: 'Вклад в банк', description: 'Положить на банковский счет 100.000BC', required: 100000, reward: 1000, type: 'deposit_bank' },
+            { id: 'bank_interest', name: 'Проценты в банке', description: 'Получить проценты из банка 5 раз', required: 5, reward: 3000, type: 'bank_interest' },
+            
+            // Ивентовые квесты
+            { id: 'participate_event', name: 'Ивентовый', description: 'Участвовать в 3 ивентах', required: 3, reward: 5000, type: 'participate_event' },
+            { id: 'win_tournament', name: 'Победитель турнира', description: 'Выиграть турнир', required: 1, reward: 25000, type: 'win_tournament' },
+            { id: 'join_clan_battle', name: 'Воин клана', description: 'Участвовать в битве кланов', required: 1, reward: 15000, type: 'join_clan_battle' },
+            { id: 'defeat_boss', name: 'Убийца боссов', description: 'Участвовать в рейде босса', required: 1, reward: 20000, type: 'defeat_boss' },
+            
+            // Ежедневные квесты
             { id: 'daily_login', name: 'Ежедневный вход', description: 'Входить в игру 7 дней подряд', required: 7, reward: 5000, type: 'daily_login' },
             { id: 'claim_daily', name: 'Забрать бонусы', description: 'Забрать ежедневный бонус 5 раз', required: 5, reward: 2000, type: 'claim_daily' },
-            { id: 'win_streak', name: 'Серия побед', description: 'Выиграть 5 раз подряд в любых играх', required: 5, reward: 3000, type: 'win_streak' },
+            { id: 'spin_wheel', name: 'Колесо фортуны', description: 'Крутить колесо фортуны 7 дней подряд', required: 7, reward: 10000, type: 'spin_wheel' },
+            
+            // Реферальные квесты
             { id: 'refer_friend', name: 'Пригласить друга', description: 'Пригласить друга по реферальной ссылке', required: 1, reward: 10000, type: 'refer_friend' },
-            { id: 'complete_all', name: 'Мастер заданий', description: 'Выполнить все задания за день', required: 1, reward: 5000, type: 'complete_all' }
+            { id: 'refer_5_friends', name: 'Вербовщик', description: 'Пригласить 5 друзей', required: 5, reward: 50000, type: 'refer_5_friends' },
+            
+            // Финальные квесты
+            { id: 'complete_all', name: 'Мастер заданий', description: 'Выполнить все задания за день', required: 1, reward: 5000, type: 'complete_all' },
+            { id: 'perfect_week', name: 'Идеальная неделя', description: 'Выполнить все задания за неделю', required: 1, reward: 50000, type: 'perfect_week' }
         ];
 
         // Система достижений
@@ -785,7 +848,14 @@
             { id: 'crash', name: 'Crash x100', chance: 95, multiplier: 100, icon: '🚀', color: 'green', minBet: 100 },
             { id: 'coinflip', name: 'Монетка x2', chance: 50, multiplier: 2, icon: '🪙', color: 'yellow', minBet: 100 },
             { id: 'wheel', name: 'Колесо x10', chance: 10, multiplier: 10, icon: '🎪', color: 'purple', minBet: 100 },
-            { id: 'highlow', name: 'High/Low', chance: 50, multiplier: 2, icon: '📊', color: 'red', minBet: 100 }
+            { id: 'highlow', name: 'High/Low', chance: 50, multiplier: 2, icon: '📊', color: 'red', minBet: 100 },
+            { id: 'slots', name: 'Слоты', chance: 15, multiplier: 10, icon: '🎰', color: 'yellow', minBet: 100 },
+            { id: 'blackjack', name: 'Блэкджек', chance: 42, multiplier: 2.5, icon: '🃏', color: 'green', minBet: 100 },
+            { id: 'mines', name: 'Мины', chance: 60, multiplier: 3, icon: '💣', color: 'red', minBet: 100 },
+            { id: 'tower', name: 'Tower', chance: 50, multiplier: 5, icon: '🗼', color: 'blue', minBet: 100 },
+            { id: 'plinko', name: 'Plinko', chance: 40, multiplier: 8, icon: '⚪', color: 'purple', minBet: 100 },
+            { id: 'limbo', name: 'Limbo', chance: 50, multiplier: 2, icon: '🎯', color: 'cyan', minBet: 100 },
+            { id: 'hilo', name: 'Hi-Lo карты', chance: 50, multiplier: 2, icon: '🎴', color: 'pink', minBet: 100 }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -1734,6 +1804,164 @@
                         showRealtimeNotification("Успех", `Статистика ${targetNick} сброшена`, "success");
                         break;
 
+                    case '/broadcast':
+                        const broadcastMsg = parts.slice(1).join(' ');
+                        if (!broadcastMsg) throw "Формат: /broadcast (текст)";
+                        await sb.from('global_alerts').insert([{ 
+                            sender: `📢 ${u.username}`, 
+                            message: broadcastMsg 
+                        }]);
+                        showRealtimeNotification("Успех", "Сообщение отправлено всем игрокам", "success");
+                        break;
+
+                    case '/addcase':
+                        if (!targetNick || !value) throw "Формат: /addcase (ник) (тип_кейса)";
+                        const addCaseType = value.toLowerCase();
+                        const validCaseTypes = CASES.map(c => c.id);
+                        if (!validCaseTypes.includes(addCaseType)) {
+                            throw `Доступные кейсы: ${validCaseTypes.join(', ')}`;
+                        }
+                        localStorage.setItem(addCaseType + '_key_' + targetNick, 'true');
+                        await sb.from('messages').insert([{
+                            sender: 'СИСТЕМА',
+                            receiver: targetNick,
+                            text: `Администратор выдал вам бесплатный ${addCaseType} кейс!`
+                        }]);
+                        showRealtimeNotification("Успех", `Кейс ${addCaseType} выдан ${targetNick}`, "success");
+                        break;
+
+                    case '/setlevel':
+                        if (!targetNick || !value) throw "Формат: /setlevel (ник) (уровень)";
+                        const newLevel = parseInt(value);
+                        const newXP = (newLevel - 1) * 1000;
+                        await sb.from('profiles').update({ xp: newXP }).eq('username', targetNick);
+                        showRealtimeNotification("Успех", `Уровень ${targetNick} изменен на ${newLevel}`, "success");
+                        break;
+
+                    case '/teleport':
+                        if (!targetNick || !value) throw "Формат: /teleport (ник1) (ник2)";
+                        const targetNick2 = value.toUpperCase();
+                        showRealtimeNotification("Информация", `Телепортация ${targetNick} к ${targetNick2} (функция в разработке)`, "info");
+                        break;
+
+                    case '/mute':
+                        if (!targetNick || !value) throw "Формат: /mute (ник) (минуты)";
+                        const muteMinutes = parseInt(value);
+                        const muteUntil = new Date();
+                        muteUntil.setMinutes(muteUntil.getMinutes() + muteMinutes);
+                        await sb.from('profiles').update({ 
+                            muted_until: muteUntil.toISOString() 
+                        }).eq('username', targetNick);
+                        showRealtimeNotification("Успех", `${targetNick} заглушен на ${muteMinutes} минут`, "success");
+                        break;
+
+                    case '/unmute':
+                        if (!targetNick) throw "Формат: /unmute (ник)";
+                        await sb.from('profiles').update({ 
+                            muted_until: null 
+                        }).eq('username', targetNick);
+                        showRealtimeNotification("Успех", `${targetNick} разглушен`, "success");
+                        break;
+
+                    case '/kick':
+                        if (!targetNick) throw "Формат: /kick (ник)";
+                        await sb.from('online_status').update({ 
+                            is_online: false 
+                        }).eq('username', targetNick);
+                        await sb.from('messages').insert([{
+                            sender: 'СИСТЕМА',
+                            receiver: targetNick,
+                            text: 'Вы были кикнуты из сессии администратором'
+                        }]);
+                        showRealtimeNotification("Успех", `${targetNick} кикнут из сессии`, "success");
+                        break;
+
+                    case '/givebonus':
+                        if (!targetNick || !value || !extra) throw "Формат: /givebonus (ник) (тип) (значение)";
+                        const bonusType = value.toLowerCase();
+                        const bonusValue = parseInt(extra);
+                        if (bonusType === 'bc') {
+                            const { data: profile } = await sb.from('profiles').select('balance').eq('username', targetNick).single();
+                            await sb.from('profiles').update({ 
+                                balance: (profile.balance || 0) + bonusValue 
+                            }).eq('username', targetNick);
+                        } else if (bonusType === 'xp') {
+                            const { data: profile } = await sb.from('profiles').select('xp').eq('username', targetNick).single();
+                            await sb.from('profiles').update({ 
+                                xp: (profile.xp || 0) + bonusValue 
+                            }).eq('username', targetNick);
+                        }
+                        showRealtimeNotification("Успех", `Бонус ${bonusValue} ${bonusType} выдан ${targetNick}`, "success");
+                        break;
+
+                    case '/resetquests':
+                        if (!targetNick) throw "Формат: /resetquests (ник)";
+                        await sb.from('quests').delete().eq('username', targetNick);
+                        showRealtimeNotification("Успех", `Квесты ${targetNick} сброшены`, "success");
+                        break;
+
+                    case '/setwinrate':
+                        if (!targetNick || !value) throw "Формат: /setwinrate (ник) (процент)";
+                        const winrate = parseInt(value);
+                        localStorage.setItem('winrate_' + targetNick, winrate.toString());
+                        showRealtimeNotification("Успех", `Винрейт ${targetNick} установлен на ${winrate}%`, "success");
+                        break;
+
+                    case '/maintenance':
+                        const mode = parts[1];
+                        if (!mode || !['on', 'off'].includes(mode)) throw "Формат: /maintenance (on/off)";
+                        localStorage.setItem('maintenance_mode', mode);
+                        if (mode === 'on') {
+                            await sb.from('global_alerts').insert([{ 
+                                sender: 'СИСТЕМА', 
+                                message: '⚠️ РЕЖИМ ОБСЛУЖИВАНИЯ ВКЛЮЧЕН. Игры временно недоступны.' 
+                            }]);
+                        } else {
+                            await sb.from('global_alerts').insert([{ 
+                                sender: 'СИСТЕМА', 
+                                message: '✅ Режим обслуживания выключен. Все системы работают.' 
+                            }]);
+                        }
+                        showRealtimeNotification("Успех", `Режим обслуживания ${mode === 'on' ? 'включен' : 'выключен'}`, "success");
+                        break;
+
+                    case '/announce':
+                        const announceMsg = parts.slice(1).join(' ');
+                        if (!announceMsg) throw "Формат: /announce (текст)";
+                        const broadcastEl = document.getElementById('global-broadcast');
+                        document.getElementById('global-broadcast-text').textContent = announceMsg;
+                        broadcastEl.classList.add('show');
+                        setTimeout(() => broadcastEl.classList.remove('show'), 10000);
+                        await sb.from('global_alerts').insert([{ 
+                            sender: '📣 ОБЪЯВЛЕНИЕ', 
+                            message: announceMsg 
+                        }]);
+                        showRealtimeNotification("Успех", "Объявление показано", "success");
+                        break;
+
+                    case '/rain':
+                        if (!value || !extra) throw "Формат: /rain (сумма) (количество)";
+                        const rainAmount = parseInt(value);
+                        const rainCount = parseInt(extra);
+                        const { data: onlineUsers } = await sb.from('online_status').select('username').eq('is_online', true);
+                        if (!onlineUsers || onlineUsers.length < rainCount) {
+                            throw `Недостаточно онлайн игроков (требуется ${rainCount})`;
+                        }
+                        const shuffled = onlineUsers.sort(() => 0.5 - Math.random());
+                        const winners = shuffled.slice(0, rainCount);
+                        for (const winner of winners) {
+                            const { data: profile } = await sb.from('profiles').select('balance').eq('username', winner.username).single();
+                            await sb.from('profiles').update({ 
+                                balance: (profile.balance || 0) + rainAmount 
+                            }).eq('username', winner.username);
+                        }
+                        await sb.from('global_alerts').insert([{ 
+                            sender: '💰 RAIN', 
+                            message: `Администратор раздал ${rainAmount} BC случайным ${rainCount} игрокам!` 
+                        }]);
+                        showRealtimeNotification("Успех", `Раздано ${rainAmount} BC ${rainCount} игрокам`, "success");
+                        break;
+
                     default:
                         showRealtimeNotification("Ошибка", "Неизвестная команда", "error");
                 }
@@ -2129,50 +2357,178 @@
             let keyName = '';
             let caseName = '';
             
-            if (lvl >= 1 && lvl <= 10) {
-                reward = Math.floor(Math.random() * (50000 - 5000)) + 5000;
-            } else if (lvl >= 11 && lvl <= 19) {
+            // Уровни 1-10
+            if (lvl >= 1 && lvl <= 4) {
+                reward = Math.floor(Math.random() * (10000 - 5000)) + 5000;
+            } else if (lvl === 5) {
+                reward = 20000;
+                showRealtimeNotification("MILESTONE!", "Первый рубеж пройден! +20K BC!", "success");
+            } else if (lvl >= 6 && lvl <= 9) {
+                reward = Math.floor(Math.random() * (30000 - 15000)) + 15000;
+            } else if (lvl === 10) {
+                reward = 50000;
+                showRealtimeNotification("MILESTONE!", "10 уровень! +50K BC!", "success");
+            
+            // Уровни 11-20
+            } else if (lvl >= 11 && lvl <= 14) {
                 reward = Math.floor(Math.random() * (70000 - 30000)) + 30000;
-            } else if (lvl === 20 || lvl === 21) {
+            } else if (lvl === 15) {
                 reward = 100000;
-            } else if (lvl === 22) {
+                hasGoldKey = true;
+                localStorage.setItem('starter_key_' + u.username, 'true');
+            } else if (lvl >= 16 && lvl <= 19) {
+                reward = Math.floor(Math.random() * (100000 - 50000)) + 50000;
+            } else if (lvl === 20) {
+                reward = 150000;
+                showRealtimeNotification("MILESTONE!", "20 уровень достигнут! +150K BC!", "success");
+            
+            // Уровни 21-25
+            } else if (lvl >= 21 && lvl <= 24) {
+                reward = Math.floor(Math.random() * (200000 - 100000)) + 100000;
+            } else if (lvl === 25) {
                 reward = 0;
                 hasGoldKey = true;
+                localStorage.setItem('ruby_key_' + u.username, 'true');
+                keyType = 'ruby';
+                keyName = "Рубиновый ключ";
+                caseName = "Рубиновый кейс";
+                showRealtimeNotification("MILESTONE 25!", "Рубиновый ключ получен!", "success");
+            
+            // Уровни 26-40
+            } else if (lvl >= 26 && lvl <= 29) {
+                reward = Math.floor(Math.random() * (300000 - 150000)) + 150000;
+            } else if (lvl === 30) {
+                reward = 500000;
+                showRealtimeNotification("MILESTONE 30!", "Полмиллиона! +500K BC!", "success");
+            } else if (lvl >= 31 && lvl <= 34) {
+                reward = Math.floor(Math.random() * (500000 - 200000)) + 200000;
+            } else if (lvl === 35) {
+                reward = 0;
+                localStorage.setItem('emerald_key_' + u.username, 'true');
+                keyType = 'emerald';
+                keyName = "Изумрудный ключ";
+                caseName = "Изумрудный кейс";
+            } else if (lvl >= 36 && lvl <= 39) {
+                reward = Math.floor(Math.random() * (800000 - 300000)) + 300000;
+            } else if (lvl === 40) {
+                reward = 1000000;
                 localStorage.setItem('gold_key_' + u.username, 'true');
                 keyType = 'gold';
                 keyName = "Золотой ключ";
                 caseName = "Золотой кейс";
-            } else if (lvl >= 23 && lvl <= 30) {
-                reward = Math.floor(Math.random() * (2000000 - 300000)) + 300000;
-            } else if (lvl >= 31 && lvl <= 39) {
-                reward = Math.floor(Math.random() * (3000000 - 500000)) + 500000;
-            } else if (lvl === 40) {
+                showRealtimeNotification("MILESTONE 40!", "Миллион + Золотой ключ!", "success");
+            
+            // Уровни 41-50
+            } else if (lvl >= 41 && lvl <= 44) {
+                reward = Math.floor(Math.random() * (1500000 - 500000)) + 500000;
+            } else if (lvl === 45) {
                 reward = 0;
+                localStorage.setItem('cosmic_key_' + u.username, 'true');
+                keyType = 'cosmic';
+                keyName = "Космический ключ";
+                caseName = "Космический кейс";
+            } else if (lvl >= 46 && lvl <= 49) {
+                reward = Math.floor(Math.random() * (2000000 - 800000)) + 800000;
+            } else if (lvl === 50) {
+                reward = 5000000;
                 hasUltraKey = true;
                 localStorage.setItem('ultra_key_' + u.username, 'true');
                 keyType = 'ultra';
-                keyName = "Ultra ключ";
+                keyName = "Black Win Ultra ключ";
                 caseName = "Black Win Ultra";
-            } else if (lvl >= 41 && lvl <= 49) {
-                reward = Math.floor(Math.random() * (5000000 - 300000)) + 300000;
-            } else if (lvl === 50) {
+                showRealtimeNotification("MILESTONE 50!", "5 миллионов + Ultra ключ!", "success");
+            
+            // Уровни 51-60
+            } else if (lvl >= 51 && lvl <= 54) {
+                reward = Math.floor(Math.random() * (3000000 - 1000000)) + 1000000;
+            } else if (lvl === 55) {
                 reward = 0;
-                hasGoldKey = true;
-                hasUltraKey = true;
-                localStorage.setItem('gold_key_' + u.username, 'true');
-                localStorage.setItem('ultra_key_' + u.username, 'true');
-                keyType = 'both';
-                keyName = "Два ключа";
-                caseName = "Золотой кейс и Black Win Ultra";
-            } else if (lvl >= 51 && lvl <= 60) {
-                reward = Math.floor(Math.random() * (10000000 - 1000000)) + 1000000;
-            } else if (lvl >= 61 && lvl <= 75) {
-                reward = Math.floor(Math.random() * (20000000 - 2000000)) + 2000000;
-            } else if (lvl >= 76 && lvl <= 99) {
-                reward = Math.floor(Math.random() * (50000000 - 5000000)) + 5000000;
+                localStorage.setItem('platinum_key_' + u.username, 'true');
+                keyType = 'platinum';
+                keyName = "Платиновый ключ";
+                caseName = "Платиновый кейс";
+            } else if (lvl >= 56 && lvl <= 59) {
+                reward = Math.floor(Math.random() * (5000000 - 2000000)) + 2000000;
+            } else if (lvl === 60) {
+                reward = 10000000;
+                showRealtimeNotification("MILESTONE 60!", "10 миллионов! VIP статус!", "success");
+            
+            // Уровни 61-75
+            } else if (lvl >= 61 && lvl <= 64) {
+                reward = Math.floor(Math.random() * (8000000 - 3000000)) + 3000000;
+            } else if (lvl === 65) {
+                reward = 0;
+                localStorage.setItem('legendary_key_' + u.username, 'true');
+                keyType = 'legendary';
+                keyName = "Легендарный ключ";
+                caseName = "Легендарный кейс";
+            } else if (lvl >= 66 && lvl <= 69) {
+                reward = Math.floor(Math.random() * (12000000 - 5000000)) + 5000000;
+            } else if (lvl === 70) {
+                reward = 20000000;
+                showRealtimeNotification("MILESTONE 70!", "20 миллионов!", "success");
+            } else if (lvl >= 71 && lvl <= 74) {
+                reward = Math.floor(Math.random() * (15000000 - 7000000)) + 7000000;
+            } else if (lvl === 75) {
+                reward = 0;
+                localStorage.setItem('diamond_key_' + u.username, 'true');
+                keyType = 'diamond';
+                keyName = "Алмазный ключ";
+                caseName = "Алмазный кейс";
+                showRealtimeNotification("MILESTONE 75!", "Алмазный ключ получен!", "success");
+            
+            // Уровни 76-90
+            } else if (lvl >= 76 && lvl <= 79) {
+                reward = Math.floor(Math.random() * (20000000 - 10000000)) + 10000000;
+            } else if (lvl === 80) {
+                reward = 30000000;
+                showRealtimeNotification("MILESTONE 80!", "30 миллионов!", "success");
+            } else if (lvl >= 81 && lvl <= 84) {
+                reward = Math.floor(Math.random() * (25000000 - 12000000)) + 12000000;
+            } else if (lvl === 85) {
+                reward = 0;
+                localStorage.setItem('mythic_key_' + u.username, 'true');
+                keyType = 'mythic';
+                keyName = "Мифический ключ";
+                caseName = "Мифический кейс";
+            } else if (lvl >= 86 && lvl <= 89) {
+                reward = Math.floor(Math.random() * (35000000 - 15000000)) + 15000000;
+            } else if (lvl === 90) {
+                reward = 50000000;
+                showRealtimeNotification("MILESTONE 90!", "50 миллионов! Почти легенда!", "success");
+            
+            // Уровни 91-99
+            } else if (lvl >= 91 && lvl <= 94) {
+                reward = Math.floor(Math.random() * (40000000 - 20000000)) + 20000000;
+            } else if (lvl === 95) {
+                reward = 0;
+                localStorage.setItem('ultimate_key_' + u.username, 'true');
+                keyType = 'ultimate';
+                keyName = "ULTIMATE ключ";
+                caseName = "Ultimate кейс";
+                showRealtimeNotification("MILESTONE 95!", "ULTIMATE ключ получен!", "success");
+            } else if (lvl >= 96 && lvl <= 99) {
+                reward = Math.floor(Math.random() * (60000000 - 30000000)) + 30000000;
+            
+            // Уровень 100 - ЛЕГЕНДА
             } else if (lvl === 100) {
                 reward = 100000000;
-                showRealtimeNotification("ЛЕГЕНДА!", "Вы достигли 100 уровня! Вы настоящая легенда!", "success");
+                // Даем все ключи
+                localStorage.setItem('starter_key_' + u.username, 'true');
+                localStorage.setItem('ruby_key_' + u.username, 'true');
+                localStorage.setItem('emerald_key_' + u.username, 'true');
+                localStorage.setItem('gold_key_' + u.username, 'true');
+                localStorage.setItem('cosmic_key_' + u.username, 'true');
+                localStorage.setItem('ultra_key_' + u.username, 'true');
+                localStorage.setItem('platinum_key_' + u.username, 'true');
+                localStorage.setItem('legendary_key_' + u.username, 'true');
+                localStorage.setItem('diamond_key_' + u.username, 'true');
+                localStorage.setItem('mythic_key_' + u.username, 'true');
+                localStorage.setItem('ultimate_key_' + u.username, 'true');
+                keyType = 'legend';
+                keyName = "ВСЕ КЛЮЧИ";
+                caseName = "все кейсы";
+                showRealtimeNotification("🏆 ЛЕГЕНДА! 🏆", "100 УРОВЕНЬ! 100М BC + ВСЕ КЛЮЧИ!", "success");
             }
             
             await saveClaimedLevel(lvl);
