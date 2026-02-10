@@ -920,14 +920,23 @@
                     <p><b>/ban (ник) (причина)</b> — Заблокировать игрока</p>
                     <p><b>/unban (ник)</b> — Разблокировать игрока</p>
                     <p><b>/givekey (ник) (кейс)</b> — Выдать ключ от кейса</p>
-                    <p><b>/event (тип) (минуты)</b> — Начать ивент (x2XP, x2BC, x2WIN, 50BONUS, WEEKEND)</p>
+                    <p><b>/event (тип) (минуты)</b> — Начать ивент</p>
                     <p><b>/stopevent (тип)</b> — Остановить ивент</p>
-                    <p><b>/giveitem (ник) (предмет)</b> — Выдать предмет</p>
                     <p><b>/givevip (ник) (дни)</b> — Выдать VIP статус</p>
-                    <p><b>/giveboost (ник) (тип) (часы)</b> — Выдать буст</p>
-                    <p><b>/setdaily (ник) (число)</b> — Установить ежедневный бонус</p>
                     <p><b>/resetstats (ник)</b> — Сбросить статистику</p>
-                    <p><b>/clearmessages (ник)</b> — Очистить сообщения</p>
+                    <p><b>/broadcast (текст)</b> — Отправить всем</p>
+                    <p><b>/addcase (ник) (кейс)</b> — Выдать кейс</p>
+                    <p><b>/setlevel (ник) (уровень)</b> — Установить уровень</p>
+                    <p><b>/teleport (ник1) (ник2)</b> — Телепорт</p>
+                    <p><b>/mute (ник) (минуты)</b> — Заглушить в чате</p>
+                    <p><b>/unmute (ник)</b> — Разглушить</p>
+                    <p><b>/kick (ник)</b> — Кикнуть из сессии</p>
+                    <p><b>/givebonus (ник) (тип) (значение)</b> — Выдать бонус</p>
+                    <p><b>/resetquests (ник)</b> — Сбросить квесты</p>
+                    <p><b>/setwinrate (ник) (процент)</b> — Установить винрейт</p>
+                    <p><b>/maintenance (on/off)</b> — Режим обслуживания</p>
+                    <p><b>/announce (текст)</b> — Объявление</p>
+                    <p><b>/rain (сумма) (кол-во)</b> — Раздать деньги</p>
                 </div>
             </div>
             
@@ -1127,6 +1136,77 @@
             { id: 'hilo', name: 'Hi-Lo карты', chance: 50, multiplier: 2, icon: '🎴', color: 'pink', minBet: 100 }
         ];
 
+        // Расширенные типы ивентов
+        const EVENT_TYPES = [
+            { id: 'x2XP', name: 'x2 XP', description: 'Удвоенный опыт', icon: '⭐' },
+            { id: 'x2BC', name: 'x2 BC', description: 'Удвоенные выигрыши', icon: '💰' },
+            { id: 'x2WIN', name: 'x2 WIN', description: 'Удвоенный шанс победы', icon: '🍀' },
+            { id: '50BONUS', name: '50% BONUS', description: '+50% к выигрышам', icon: '💎' },
+            { id: 'WEEKEND', name: 'WEEKEND BONUS', description: 'Выходной бонус', icon: '🎉' },
+            { id: 'HAPPYHOUR', name: 'СЧАСТЛИВЫЙ ЧАС', description: 'x3 выигрыши на час', icon: '⏰' },
+            { id: 'TOURNAMENT', name: 'ТУРНИР', description: 'Соревнование игроков', icon: '🏆' },
+            { id: 'JACKPOT', name: 'ДЖЕКПОТ', description: 'Общий призовой фонд', icon: '💸' },
+            { id: 'FLASH', name: 'FLASH СОБЫТИЕ', description: '15 минут безумия', icon: '⚡' },
+            { id: 'BOSS', name: 'РЕЙД БОССА', description: 'Коллективный босс', icon: '👹' }
+        ];
+
+        // Система питомцев
+        const PETS = [
+            { id: 'cat', name: '🐱 Кот', bonus: 'xp', value: 1.1, price: 50000, description: '+10% опыта' },
+            { id: 'dog', name: '🐕 Пёс', bonus: 'bc', value: 1.05, price: 100000, description: '+5% выигрышей' },
+            { id: 'dragon', name: '🐉 Дракон', bonus: 'luck', value: 1.15, price: 500000, description: '+15% удачи' },
+            { id: 'phoenix', name: '🔥 Феникс', bonus: 'multi', value: 1.2, price: 1000000, description: '+20% к множителям' },
+            { id: 'unicorn', name: '🦄 Единорог', bonus: 'streak', value: 2, price: 2000000, description: 'Защита серии' },
+            { id: 'ghost', name: '👻 Призрак', bonus: 'free_spin', value: 1, price: 5000000, description: 'Бесплатные спины' }
+        ];
+
+        // Титулы
+        const TITLES = [
+            { id: 'newbie', name: 'Новичок', requirement: 'level', value: 1, color: 'gray' },
+            { id: 'player', name: 'Игрок', requirement: 'level', value: 10, color: 'white' },
+            { id: 'veteran', name: 'Ветеран', requirement: 'level', value: 25, color: 'blue' },
+            { id: 'elite', name: 'Элита', requirement: 'level', value: 50, color: 'purple' },
+            { id: 'legend', name: 'Легенда', requirement: 'level', value: 75, color: 'orange' },
+            { id: 'god', name: 'Бог Black Win', requirement: 'level', value: 100, color: 'red' },
+            { id: 'millionaire', name: 'Миллионер', requirement: 'balance', value: 1000000, color: 'yellow' },
+            { id: 'billionaire', name: 'Миллиардер', requirement: 'balance', value: 1000000000, color: 'gold' },
+            { id: 'gambler', name: 'Азартный', requirement: 'bets', value: 1000, color: 'red' },
+            { id: 'lucky', name: 'Счастливчик', requirement: 'streak', value: 20, color: 'green' },
+            { id: 'vip', name: 'VIP', requirement: 'vip', value: 1, color: 'pink' },
+            { id: 'admin', name: 'Администратор', requirement: 'admin', value: 1, color: 'red' }
+        ];
+
+        // VIP уровни
+        const VIP_TIERS = [
+            { level: 1, name: 'Bronze VIP', price: 100000, duration: 7, bonuses: { xp: 1.1, bc: 1.05, cases: 0.05 } },
+            { level: 2, name: 'Silver VIP', price: 500000, duration: 14, bonuses: { xp: 1.2, bc: 1.1, cases: 0.1 } },
+            { level: 3, name: 'Gold VIP', price: 1000000, duration: 30, bonuses: { xp: 1.3, bc: 1.15, cases: 0.15 } },
+            { level: 4, name: 'Platinum VIP', price: 5000000, duration: 60, bonuses: { xp: 1.5, bc: 1.25, cases: 0.2 } },
+            { level: 5, name: 'Diamond VIP', price: 10000000, duration: 90, bonuses: { xp: 2.0, bc: 1.5, cases: 0.3 } }
+        ];
+
+        // Предметы инвентаря
+        const INVENTORY_ITEMS = [
+            { id: 'xp_booster', name: '⭐ XP бустер', duration: 3600, effect: 'xp', value: 2, price: 50000 },
+            { id: 'bc_booster', name: '💰 BC бустер', duration: 3600, effect: 'bc', value: 1.5, price: 100000 },
+            { id: 'luck_charm', name: '🍀 Талисман удачи', duration: 1800, effect: 'luck', value: 1.3, price: 200000 },
+            { id: 'shield', name: '🛡️ Защита', duration: 600, effect: 'protection', value: 1, price: 150000 },
+            { id: 'multiplier', name: '📈 Множитель', duration: 900, effect: 'multi', value: 2, price: 300000 },
+            { id: 'free_case', name: '🎁 Бесплатный кейс', duration: 0, effect: 'case', value: 1, price: 250000 }
+        ];
+
+        // Призы колеса фортуны
+        const WHEEL_PRIZES = [
+            { name: '100 BC', value: 100, type: 'bc', chance: 0.3 },
+            { name: '1.000 BC', value: 1000, type: 'bc', chance: 0.25 },
+            { name: '10.000 BC', value: 10000, type: 'bc', chance: 0.15 },
+            { name: '50.000 BC', value: 50000, type: 'bc', chance: 0.1 },
+            { name: '100 XP', value: 100, type: 'xp', chance: 0.1 },
+            { name: '500 XP', value: 500, type: 'xp', chance: 0.05 },
+            { name: 'Бесплатный кейс', value: 1, type: 'case', chance: 0.04 },
+            { name: 'XP бустер', value: 1, type: 'booster', chance: 0.01 }
+        ];
+
         window.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem('bw_session');
             if(saved) {
@@ -1244,6 +1324,11 @@
             
             // Запускаем polling для ивентов
             startEventPolling();
+            
+            // Инициализация новых систем
+            loadActivePet();
+            checkWheelSpin();
+            await calculateBankInterest();
             
             // Проверка админ-прав
             if (u.is_admin) {
@@ -2840,6 +2925,21 @@
         }
 
         async function updateData(b, x) {
+            // Применяем бонусы от питомца
+            if (activePet && b > 0) {
+                b = applyPetBonus(b, 'bc');
+            }
+            if (activePet && x > 0) {
+                x = applyPetBonus(x, 'xp');
+            }
+
+            // Применяем VIP бонусы
+            if (isVIP()) {
+                const vipBonuses = getVIPBonuses();
+                if (b > 0) b = Math.floor(b * vipBonuses.bc);
+                if (x > 0) x = Math.floor(x * vipBonuses.xp);
+            }
+
             // Применяем бонусы от ивентов
             let bonusMultiplier = 1;
             if (activeEvent) {
@@ -2859,9 +2959,17 @@
                     bonusMultiplier = 1.25;
                     if (b > 0) b = Math.floor(b * bonusMultiplier);
                     if (x > 0) x = Math.floor(x * bonusMultiplier);
+                } else if (activeEvent.event_type === 'СЧАСТЛИВЫЙ ЧАС' && b > 0) {
+                    bonusMultiplier = 3;
+                    b = b * bonusMultiplier;
                 }
             }
             
+            // Добавляем в джекпот если это ставка
+            if (b < 0) {
+                addToJackpot(Math.abs(b));
+            }
+
             const { data } = await sb.from('profiles').update({ 
                 balance: u.balance + b, 
                 xp: u.xp + x 
@@ -2871,9 +2979,14 @@
             localStorage.setItem('bw_session', JSON.stringify(u));
             updateUI();
             
+            // Проверяем джекпот при выигрыше
+            if (b > 0) {
+                await triggerJackpot();
+            }
+
             // Показываем бонус, если был применен
             if (bonusMultiplier > 1 && (b !== 0 || x !== 0)) {
-                const bonusText = bonusMultiplier === 2 ? 'x2' : bonusMultiplier === 1.5 ? 'x1.5' : 'x1.25';
+                const bonusText = bonusMultiplier === 2 ? 'x2' : bonusMultiplier === 3 ? 'x3' : bonusMultiplier === 1.5 ? 'x1.5' : 'x1.25';
                 showRealtimeNotification(`БОНУС ${bonusText}!`, `Активен ивент "${activeEvent.event_type}"`, "success");
             }
             
@@ -4556,6 +4669,307 @@
         }
 
         // Конец новых игр
+
+        // === ДОПОЛНИТЕЛЬНЫЕ СИСТЕМЫ ===
+
+        // === КОЛЕСО ФОРТУНЫ ===
+        let wheelSpinAvailable = true;
+
+        function checkWheelSpin() {
+            const lastSpin = localStorage.getItem('last_wheel_spin_' + u.username);
+            const today = new Date().toDateString();
+            
+            if (lastSpin === today) {
+                wheelSpinAvailable = false;
+            } else {
+                wheelSpinAvailable = true;
+            }
+        }
+
+        async function spinWheel() {
+            if (!wheelSpinAvailable) {
+                showRealtimeNotification("Информация", "Колесо уже крутили сегодня! Приходите завтра.", "info");
+                return;
+            }
+
+            // Определяем приз
+            const random = Math.random();
+            let cumulative = 0;
+            let prize = null;
+
+            for (const p of WHEEL_PRIZES) {
+                cumulative += p.chance;
+                if (random <= cumulative) {
+                    prize = p;
+                    break;
+                }
+            }
+
+            if (!prize) prize = WHEEL_PRIZES[0];
+
+            // Выдаем приз
+            if (prize.type === 'bc') {
+                await updateData(prize.value, 0);
+                showRealtimeNotification("КОЛЕСО ФОРТУНЫ!", `Вы выиграли ${prize.value} BC!`, "success");
+            } else if (prize.type === 'xp') {
+                await updateData(0, prize.value);
+                showRealtimeNotification("КОЛЕСО ФОРТУНЫ!", `Вы выиграли ${prize.value} XP!`, "success");
+            } else if (prize.type === 'case') {
+                localStorage.setItem('starter_key_' + u.username, 'true');
+                showRealtimeNotification("КОЛЕСО ФОРТУНЫ!", "Вы выиграли бесплатный кейс!", "success");
+            } else if (prize.type === 'booster') {
+                showRealtimeNotification("КОЛЕСО ФОРТУНЫ!", "Вы выиграли XP бустер на 1 час!", "success");
+            }
+
+            localStorage.setItem('last_wheel_spin_' + u.username, new Date().toDateString());
+            wheelSpinAvailable = false;
+            updateQuestProgress('spin_wheel', 1);
+        }
+
+        // === РЕФЕРАЛЬНАЯ СИСТЕМА ===
+        async function generateReferralCode() {
+            const code = u.username + '_' + Math.random().toString(36).substring(7);
+            localStorage.setItem('referral_code_' + u.username, code);
+            return code;
+        }
+
+        async function useReferralCode(code) {
+            if (!code || code.trim() === '') {
+                showRealtimeNotification("Ошибка", "Введите реферальный код!", "error");
+                return;
+            }
+
+            const referrerUsername = code.split('_')[0];
+            
+            if (referrerUsername === u.username) {
+                showRealtimeNotification("Ошибка", "Нельзя использовать свой код!", "error");
+                return;
+            }
+
+            // Проверяем, использовал ли уже
+            const used = localStorage.getItem('used_referral_' + u.username);
+            if (used) {
+                showRealtimeNotification("Информация", "Вы уже использовали реферальный код!", "info");
+                return;
+            }
+
+            // Награды
+            await updateData(50000, 1000);
+            showRealtimeNotification("РЕФЕРАЛ!", "Вы получили 50.000 BC и 1.000 XP!", "success");
+            
+            // Награждаем реферера
+            const { data: referrer } = await sb.from('profiles').select('balance, xp').eq('username', referrerUsername).single();
+            if (referrer) {
+                await sb.from('profiles').update({
+                    balance: referrer.balance + 100000,
+                    xp: referrer.xp + 2000
+                }).eq('username', referrerUsername);
+            }
+
+            localStorage.setItem('used_referral_' + u.username, code);
+            updateQuestProgress('refer_friend', 1);
+        }
+
+        // === БАНКОВСКИЕ ПРОЦЕНТЫ ===
+        async function calculateBankInterest() {
+            if (!u.bank_balance || u.bank_balance === 0) return;
+
+            const lastInterest = localStorage.getItem('last_bank_interest_' + u.username);
+            const today = new Date().toDateString();
+
+            if (lastInterest === today) return;
+
+            const interest = Math.floor(u.bank_balance * 0.05); // 5% в день
+            
+            await sb.from('profiles').update({
+                bank_balance: u.bank_balance + interest
+            }).eq('username', u.username);
+
+            u.bank_balance += interest;
+            localStorage.setItem('bw_session', JSON.stringify(u));
+            localStorage.setItem('last_bank_interest_' + u.username, today);
+
+            showRealtimeNotification("БАНК", `Начислены проценты: +${interest.toLocaleString()} BC`, "success");
+            updateQuestProgress('bank_interest', 1);
+        }
+
+        // === СИСТЕМА ПИТОМЦЕВ ===
+        let activePet = null;
+
+        function loadActivePet() {
+            const petId = localStorage.getItem('active_pet_' + u.username);
+            if (petId) {
+                activePet = PETS.find(p => p.id === petId);
+            }
+        }
+
+        async function buyPet(petId) {
+            const pet = PETS.find(p => p.id === petId);
+            if (!pet) return;
+
+            if (u.balance < pet.price) {
+                showRealtimeNotification("Ошибка", "Недостаточно BC для покупки питомца!", "error");
+                return;
+            }
+
+            await updateData(-pet.price, 0);
+            localStorage.setItem('active_pet_' + u.username, pet.id);
+            activePet = pet;
+            
+            showRealtimeNotification("ПИТОМЕЦ!", `Вы купили ${pet.name}! ${pet.description}`, "success");
+        }
+
+        function applyPetBonus(amount, type) {
+            if (!activePet) return amount;
+
+            if (type === 'xp' && activePet.bonus === 'xp') {
+                return Math.floor(amount * activePet.value);
+            } else if (type === 'bc' && activePet.bonus === 'bc') {
+                return Math.floor(amount * activePet.value);
+            }
+            
+            return amount;
+        }
+
+        // === VIP СИСТЕМА ===
+        async function buyVIP(tier) {
+            const vipTier = VIP_TIERS[tier - 1];
+            if (!vipTier) return;
+
+            if (u.balance < vipTier.price) {
+                showRealtimeNotification("Ошибка", "Недостаточно BC для покупки VIP!", "error");
+                return;
+            }
+
+            const vipUntil = new Date();
+            vipUntil.setDate(vipUntil.getDate() + vipTier.duration);
+
+            await sb.from('profiles').update({
+                balance: u.balance - vipTier.price,
+                vip_until: vipUntil.toISOString(),
+                vip_tier: tier
+            }).eq('username', u.username);
+
+            u.balance -= vipTier.price;
+            u.vip_until = vipUntil.toISOString();
+            
+            showRealtimeNotification("VIP СТАТУС!", `Вы купили ${vipTier.name} на ${vipTier.duration} дней!`, "success");
+        }
+
+        function isVIP() {
+            if (!u.vip_until) return false;
+            return new Date(u.vip_until) > new Date();
+        }
+
+        function getVIPBonuses() {
+            if (!isVIP() || !u.vip_tier) return { xp: 1, bc: 1, cases: 0 };
+            const tier = VIP_TIERS[u.vip_tier - 1];
+            return tier ? tier.bonuses : { xp: 1, bc: 1, cases: 0 };
+        }
+
+        // === ЛОТЕРЕЯ ===
+        let lotteryTickets = [];
+
+        async function buyLotteryTicket(count = 1) {
+            const ticketPrice = 10000;
+            const totalCost = ticketPrice * count;
+
+            if (u.balance < totalCost) {
+                showRealtimeNotification("Ошибка", "Недостаточно BC для покупки билетов!", "error");
+                return;
+            }
+
+            await updateData(-totalCost, 0);
+            
+            for (let i = 0; i < count; i++) {
+                const ticketNumber = Math.floor(Math.random() * 1000000);
+                lotteryTickets.push(ticketNumber);
+            }
+
+            showRealtimeNotification("ЛОТЕРЕЯ", `Куплено ${count} билетов! Номера: ${lotteryTickets.slice(-count).join(', ')}`, "success");
+        }
+
+        async function drawLottery() {
+            if (!u.is_admin) return;
+
+            const winningNumber = Math.floor(Math.random() * 1000000);
+            const jackpot = 10000000; // Фиксированный джекпот
+
+            // Проверяем есть ли победитель
+            const hasWinner = lotteryTickets.includes(winningNumber);
+
+            if (hasWinner) {
+                await updateData(jackpot, 5000);
+                showRealtimeNotification("ЛОТЕРЕЯ ВЫИГРАНА!", `Ваш номер ${winningNumber} выиграл ${jackpot.toLocaleString()} BC!`, "success");
+            } else {
+                showRealtimeNotification("ЛОТЕРЕЯ", `Выигрышный номер: ${winningNumber}. Попробуйте еще раз!`, "info");
+            }
+        }
+
+        // === ТУРНИРЫ ===
+        let currentTournament = null;
+
+        async function createTournament(name, prizePool, duration) {
+            if (!u.is_admin) return;
+
+            const endTime = new Date();
+            endTime.setMinutes(endTime.getMinutes() + duration);
+
+            currentTournament = {
+                name: name,
+                prizePool: prizePool,
+                endTime: endTime,
+                participants: [],
+                scores: {}
+            };
+
+            await sb.from('global_alerts').insert([{
+                sender: '🏆 ТУРНИР',
+                message: `Начался турнир "${name}"! Призовой фонд: ${prizePool.toLocaleString()} BC!`
+            }]);
+
+            showRealtimeNotification("ТУРНИР!", `Турнир "${name}" начался!`, "success");
+        }
+
+        async function joinTournament() {
+            if (!currentTournament) {
+                showRealtimeNotification("Ошибка", "Нет активного турнира!", "error");
+                return;
+            }
+
+            if (currentTournament.participants.includes(u.username)) {
+                showRealtimeNotification("Информация", "Вы уже участвуете в турнире!", "info");
+                return;
+            }
+
+            currentTournament.participants.push(u.username);
+            currentTournament.scores[u.username] = 0;
+
+            showRealtimeNotification("ТУРНИР", "Вы присоединились к турниру!", "success");
+            updateQuestProgress('win_tournament', 0);
+        }
+
+        // === ДЖЕКПОТ ===
+        let globalJackpot = 0;
+
+        function addToJackpot(amount) {
+            globalJackpot += Math.floor(amount * 0.01); // 1% от ставки
+        }
+
+        async function triggerJackpot() {
+            if (Math.random() < 0.001) { // 0.1% шанс
+                const winner = u.username;
+                await updateData(globalJackpot, 1000);
+                
+                await sb.from('global_alerts').insert([{
+                    sender: '💸 ДЖЕКПОТ',
+                    message: `${winner} выиграл ДЖЕКПОТ ${globalJackpot.toLocaleString()} BC!`
+                }]);
+
+                showRealtimeNotification("ДЖЕКПОТ!!!", `ВЫ ВЫИГРАЛИ ДЖЕКПОТ! +${globalJackpot.toLocaleString()} BC!`, "success");
+                globalJackpot = 0;
+            }
+        }
 
         function showModal(t, d) {
             document.getElementById('modal-title').innerText = t;
